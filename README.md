@@ -1,5 +1,5 @@
 # forest_degradation
-To does:
+To do:
 Intersect sample points with:
 - Soy Suitability ([GAEZ](https://www.gaez.iiasa.ac.at/), [Aptitude for mechanized crops derived from Soares-Filho et al 2014](https://www.csr.ufmg.br/forestcode/)  )  
 - [Population](https://www.worldpop.org/geodata/listing?id=77)
