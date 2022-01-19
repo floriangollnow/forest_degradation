@@ -11,6 +11,6 @@ Intersect sample points with:
 - Incra Settlements (separately [Federal and Reconhecimento](https://certificacao.incra.gov.br/csv_shp/export_shp.py))
 
 ## Done
-- Prepare points data  
-- [Population](https://www.worldpop.org/geodata/listing?id=77) - some NaNs present.   
-- Soy Suitability ([GAEZ](https://www.gaez.iiasa.ac.at/), [Aptitude for mechanized crops derived from Soares-Filho et al 2014](https://www.csr.ufmg.br/forestcode/) )  
+- Prepare points data for data extraction  
+- Extract [Population](https://www.worldpop.org/geodata/listing?id=77) - some NaNs present.   
+- Extract Soy Suitability ([GAEZ](https://www.gaez.iiasa.ac.at/), [Aptitude for mechanized crops derived from Soares-Filho et al 2014](https://www.csr.ufmg.br/forestcode/) )  
