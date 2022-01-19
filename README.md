@@ -1,7 +1,6 @@
 # forest_degradation
 ## To do:
 Intersect sample points with:
-- Soy Suitability ([GAEZ](https://www.gaez.iiasa.ac.at/), [Aptitude for mechanized crops derived from Soares-Filho et al 2014](https://www.csr.ufmg.br/forestcode/)  )  
 - distance to main roads  
 - distance to secondary roads  
 - public land  (CAR)
@@ -14,3 +13,4 @@ Intersect sample points with:
 ## Done
 - Prepare points data  
 - [Population](https://www.worldpop.org/geodata/listing?id=77) - some NaNs present.   
+- Soy Suitability ([GAEZ](https://www.gaez.iiasa.ac.at/), [Aptitude for mechanized crops derived from Soares-Filho et al 2014](https://www.csr.ufmg.br/forestcode/) )  
