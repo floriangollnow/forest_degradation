@@ -1,3 +1,7 @@
+## intersecting points with PAs and Indigenous territories
+## all processing done on RStudio server. 
+## 
+
 library (tidyverse)
 library (sf)  
 library(nngeo)
