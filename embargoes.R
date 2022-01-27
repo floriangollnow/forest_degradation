@@ -124,7 +124,7 @@ write_rds (RO_car_embargoed_poly, file.path(dir_data, "processing/RO_car_embargo
 
 ### combine polygon data keeping only the the id and row
 CAR_embargoe <-  rbind(MT_car_embargoed_poly %>% select (id, row), PA_car_embargoed_poly %>% select (id, row), RO_car_embargoed_poly%>% select (id, row))
-CAR_embargoe_row <- CAR_embargoe %>% select (row)# sometimes multiple polygons per row id -> keep the larger
+CAR_embargoe_row <- CAR_embargoe %>% select (row)# 
 CAR_embargoe
 
 
