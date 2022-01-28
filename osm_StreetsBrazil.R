@@ -1,8 +1,5 @@
 #osm roads
 
-if(!require("osmdata")) install.packages("osmdata")if(!require("tidyverse")) install.packages("tidyverse")
-if(!require("sf")) install.packages("sf")
-if(!require("ggmap")) install.packages("ggmap")
 devtools::install_github("ropensci/rnaturalearthdata")
 devtools::install_github("ropensci/rnaturalearthhires")
 #load packages
@@ -17,12 +14,43 @@ library(rnaturalearthhires)
 dir_data <- "~/Data/roads"
 
 head(available_features())
-(available_tags("highway"))
-?getbb
-test <- getbb("Cuiaba",featuretype = "settlement" )
-str(test)
+#(available_tags("highway"))
+#?getbb
+#test <- getbb("Cuiaba",featuretype = "settlement" )
+#str(test)
+
+# PA
 state <- ne_states(country="Brazil", returnclass="sf") 
-state <- state %>% filter (code_hasc=="BR.PA"| code_hasc=="BR.MT"| code_hasc=="BR.RO")
+state <- state %>% filter (code_hasc=="BR.PA")#| code_hasc=="BR.MT"| code_hasc=="BR.RO")
+ggplot()+geom_sf(data=state)
+bb_box_state <- st_bbox(state) 
+bb_box_state.m <- matrix (bb_box_state, byrow = F, ncol = 2)
+rownames(bb_box_state.m)<- c("x","y")
+colnames(bb_box_state.m)<- c("min","max")
+
+str(bb_box_state.m)
+
+q <- bb_box_state.m%>%
+  opq()%>%
+  add_osm_features(
+    features = c ("\"highway\"=\"motorway\"",
+                  "\"highway\"=\"trunk\"",
+                  "\"highway\"=\"primary\"",
+                   "\"highway\"=\"secondary\"",
+                   "\"highway\"=\"tertiary\"",
+                   "\"highway\"=\"unclassified\"",
+                   "\"highway\"=\"track\"",
+                   "\"highway\"=\"road\""))
+
+PA_all_roads <- osmdata_sf(q)
+
+PA_all_roads_lines <- (PA_all_roads$osm_lines)
+# ggplot()+geom_sf(data=state) geom_sf(data=PA_all_roads$osm_lines)
+
+
+#MT
+state <- state %>% filter (code_hasc=="BR.MT")#| code_hasc=="BR.MT"| code_hasc=="BR.RO")
+#ggplot()+geom_sf(data=state)
 bb_box_state <- st_bbox(state) 
 bb_box_state.m <- matrix (bb_box_state, byrow = F, ncol = 2)
 rownames(bb_box_state.m)<- c("x","y")
@@ -42,16 +70,40 @@ q <- bb_box_state.m%>%
                   "\"highway\"=\"track\"",
                   "\"highway\"=\"road\""))
 
-all_roads <- osmdata_sf(q)
+MT_all_roads <- osmdata_sf(q)
 
-all_roads_lines <- (all_roads$osm_lines)
-
-
-write_rds (all_roads, file.path(dir_data, "OSM_roads.rds"))
-write_sf (all_roads, file.path(dir_data, "OSM_roads.geojson"))
-# 
-# ,
+MT_all_roads_lines <- (MT_all_roads$osm_lines)
+#ggplot()+geom_sf(data=state) geom_sf(data=MT_all_roads$osm_lines)
 
 
-# ,
+# RO
+state <- state %>% filter (code_hasc=="BR.RO")#| code_hasc=="BR.MT"| code_hasc=="BR.RO")
+#ggplot()+geom_sf(data=state)
+bb_box_state <- st_bbox(state) 
+bb_box_state.m <- matrix (bb_box_state, byrow = F, ncol = 2)
+rownames(bb_box_state.m)<- c("x","y")
+colnames(bb_box_state.m)<- c("min","max")
+
+str(bb_box_state.m)
+
+q <- bb_box_state.m%>%
+  opq()%>%
+  add_osm_features(
+    features = c ("\"highway\"=\"motorway\"",
+                  "\"highway\"=\"trunk\"",
+                  "\"highway\"=\"primary\"",
+                  "\"highway\"=\"secondary\"",
+                  "\"highway\"=\"tertiary\"",
+                  "\"highway\"=\"unclassified\"",
+                  "\"highway\"=\"track\"",
+                  "\"highway\"=\"road\""))
+
+RO_all_roads <- osmdata_sf(q)
+RO_all_roads_lines <- (RO_all_roads$osm_lines)
+
+ggplot()+geom_sf(data=state) + 
+  geom_sf(data=RO_all_roads$osm_lines)+
+  geom_sf(data=MT_all_roads$osm_lines)+
+  geom_sf(data=PA_all_roads$osm_lines)
+  
 
