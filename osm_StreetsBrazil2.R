@@ -75,3 +75,5 @@ write_sf(all_roads_c, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/
 all_roads_c_u <- all_roads_c %>% st_union(by_feature=TRUE)
 write_rds(all_roads_c_u, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/results/PA_roads_all_tiles_u.rds")
 write_sf(all_roads_c_u, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/results/PA_roads_all_tiles_u.geojson")
+write_sf(all_roads_c_u, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/results/PA_roads_all_tiles_u.shp")
+
