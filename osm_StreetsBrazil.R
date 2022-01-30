@@ -6,7 +6,7 @@
 devtools::install_github("ropensci/rnaturalearthdata")
 devtools::install_github("ropensci/rnaturalearthhires")
 library(httr)    
-set_config(use_proxy(url="10.3.100.207",port=8080))
+#set_config(use_proxy(url="10.3.100.207",port=8080))
 #load packages
 library(tidyverse)
 library(osmdata)
@@ -54,7 +54,8 @@ PA_all_roads <- osmdata_sf(q)
 PA_all_roads_lines <- (PA_all_roads$osm_lines)
 ggplot()+geom_sf(data=state) +geom_sf(data=PA_all_roads$osm_lines)
 write_rds(PA_all_roads, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/processing/PA_roads.rds") 
-#PA_all_roads<-read_rds("/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/processing/PA_roads.rds")
+
+PA_all_roads<-read_rds(file.path(dir_data,"processing/PA_roads.rds"))
 
 #MT 1
 state <- ne_states(country="Brazil", returnclass="sf") 
@@ -87,6 +88,7 @@ MT1_all_roads_lines <- (MT1_all_roads$osm_lines)
 ggplot()+geom_sf(data=state) + geom_sf(data=MT1_all_roads$osm_lines)
 write_rds(MT1_all_roads, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/processing/MT1_roads.rds") 
 
+MT1_all_roads<-read_rds(file.path(dir_data,"processing/MT1_roads.rds"))
 #MT2
 bb_box_state.m <- matrix (bb_box_state_tile[[2]], byrow = F, ncol = 2)
 rownames(bb_box_state.m)<- c("x","y")
@@ -112,6 +114,7 @@ MT2_all_roads_lines <- (MT2_all_roads$osm_lines)
 ggplot()+geom_sf(data=state) + geom_sf(data=MT2_all_roads$osm_lines)
 write_rds(MT2_all_roads, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/processing/MT2_roads.rds") 
 
+MT2_all_roads<-read_rds(file.path(dir_data,"processing/MT2_roads.rds"))
 
 # RO
 state <- ne_states(country="Brazil", returnclass="sf") 
@@ -141,6 +144,8 @@ RO_all_roads_lines <- (RO_all_roads$osm_lines)
 ggplot()+geom_sf(data=state) + geom_sf(data=RO_all_roads$osm_lines)
 write_rds(RO_all_roads, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/processing/RO_roads.rds") 
 
+RO_all_roads<-read_rds(file.path(dir_data,"processing/RO_roads.rds"))
+
 ## plot them all
 state <- ne_states(country="Brazil", returnclass="sf") 
 
@@ -158,10 +163,12 @@ ggplot()+geom_sf(data=state) +
 names(MT1_all_roads$osm_lines)
 names(MT2_all_roads$osm_lines)
 MT_roads <- rbind (MT1_all_roads$osm_lines %>% select(c("osm_id","highway")), MT2_all_roads$osm_lines %>%  select(c("osm_id","highway")))
-MT_roads_merge <- MT_roads %>% st_union()
+#MT_roads_merge <- MT_roads %>% st_union()
 
-OSM_roads <- rbind(MT_roads_merge,PA_all_roads$osm_lines %>% select(c("osm_id","highway")), RO_all_roads$osm_lines %>%  select(c("osm_id","highway")))
+OSM_roads <- rbind(MT_roads,PA_all_roads$osm_lines %>% select(c("osm_id","highway")), RO_all_roads$osm_lines %>%  select(c("osm_id","highway")))
+#ggplot()+geom_sf(data=OSM_roads)
 OSM_roads_merge <- OSM_roads %>% st_union()
+write_rds(OSM_roads_merge, file.path(dir_data,"results/OSM_roads.rds"))
 write_rds(OSM_roads_merge, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/results/OSM_roads.rds") 
 
   
