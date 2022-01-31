@@ -32,7 +32,7 @@ bb_box_state <- st_bbox(state)
 bb_box_state_tile <- split_bbox(bb_box_state,4,4)# see funtion in file x_split_box.R
 
 # download all data in tiles
-for (i in 9:length(bb_box_state_tile)){
+for (i in 1:length(bb_box_state_tile)){
 timestamp()
 print(paste("Starting",i, "from", length(bb_box_state_tile)))
 bb_box_state.m <- matrix (bb_box_state_tile [[i]], byrow = F, ncol = 2)
@@ -72,8 +72,16 @@ write_rds(all_roads_c, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads
 write_sf(all_roads_c, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/results/PA_roads_all_tiles.geojson")
 
 # union by feature with st_union
-all_roads_c_u <- all_roads_c %>% st_union(by_feature=TRUE)
+sf_use_s2(FALSE)
+#roads_c  <- read_rds(file.path (dir_data, "results/PA_roads_all_tiles_u.rds"))
+roads_u <- roads_c %>% 
+  group_by(highway) %>%
+  summarise(geometry = sf::st_union(geometry)) %>%
+  ungroup()
+roads_u
+#all_roads_c_u <- all_roads_c %>% st_union(by_feature=TRUE)
 write_rds(all_roads_c_u, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/results/PA_roads_all_tiles_u.rds")
 write_sf(all_roads_c_u, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/results/PA_roads_all_tiles_u.geojson")
 write_sf(all_roads_c_u, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/results/PA_roads_all_tiles_u.shp")
+
 
