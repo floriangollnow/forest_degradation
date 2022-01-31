@@ -8,8 +8,9 @@ sf::sf_use_s2(FALSE) # issue with spehrical geometries of CAR data
 point_dir <- 
 car_data <- "~/shared_epl/public/ONGOING_RESEARCH/ZDCinBrazil/Deregulation_Covid/DATA/pa_br_car_2021"
 dir_car <- "~/Data/car"
-point_row <- "~/Data/Points"
+point_data <- "~/Data/Points"
 
+point_row <- read_rds(file.path(point_data, "points_row_sf.rds"))
 #MT
 MT_car <- read_sf (file.path(car_data, "uf_MT/uf_MT.shp"))
 MT_car <- MT_car %>% st_transform(crs = st_crs(point_row))
@@ -23,7 +24,7 @@ PA_car_p <- PA_car %>% filter (tipo_imove=="IRU")
 #RO
 RO_car <- read_sf (file.path(car_data, "uf_RO/uf_RO.shp"))
 RO_car <- RO_car %>% st_transform(crs = st_crs(point_row))
-PA_car_p <- PA_car %>% filter (tipo_imove=="IRU")
+RO_car_p <- RO_car %>% filter (tipo_imove=="IRU")
 
 #CAR - bind properties
 CAR_p <- rbind(RO_car_p %>% select(), MT_car_p %>% select(), PA_car_p %>% select())
