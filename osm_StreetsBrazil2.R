@@ -73,15 +73,20 @@ write_sf(all_roads_c, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/
 
 # union by feature with st_union
 sf_use_s2(FALSE)
-#roads_c  <- read_rds(file.path (dir_data, "results/PA_roads_all_tiles_u.rds"))
-roads_u <- roads_c %>% 
+#all_roads_c  <- read_rds(file.path (dir_data, "results/PA_roads_all_tiles_u.rds"))
+all_roads_u <- all_roads_c %>% 
   group_by(highway) %>%
   summarise(geometry = sf::st_union(geometry)) %>%
   ungroup()
 roads_u
+
 #all_roads_c_u <- all_roads_c %>% st_union(by_feature=TRUE)
-write_rds(all_roads_c_u, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/results/PA_roads_all_tiles_u.rds")
-write_sf(all_roads_c_u, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/results/PA_roads_all_tiles_u.geojson")
-write_sf(all_roads_c_u, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/results/PA_roads_all_tiles_u.shp")
+write_rds(all_roads_u, "~/Data/OSM_roads/results/PA_roads_all_tiles_u_s2FALSE.rds")
+write_sf(all_roads_u, "~/Data/OSM_roads/results/PA_roads_all_tiles_u_s2FALSE.geojson")
+write_sf(all_roads_u, "~/Data/OSM_roads/results/PA_roads_all_tiles_u_s2FALSE.shp")
+
+# write_rds(all_roads_u, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/results/PA_roads_all_tiles_u_s2FALSE.rds")
+# write_sf(all_roads_u, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/results/PA_roads_all_tiles_u_s2FALSE.geojson")
+# write_sf(all_roads_u, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/results/PA_roads_all_tiles_u_s2FALSE.shp")
 
 
