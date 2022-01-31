@@ -18,6 +18,8 @@ assR_d <- assR %>% select(data_de_cr) %>% mutate(AssReconhecimentoY = year(dmy(d
 point_row <- read_rds (file.path(dir_p, "points_row_sf.rds"))
 
 #intersect
+assF_d <- assF_d %>% st_transform(crs=st_crs(point_row))
+assR_d <- assR_d %>% st_transform(crs=st_crs(point_row))
 point_assF <- point_row %>% st_intersection (assF_d)
 point_assR <- point_row %>% st_intersection (assR_d)
 
