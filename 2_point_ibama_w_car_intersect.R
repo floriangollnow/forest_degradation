@@ -7,6 +7,11 @@ library(lubridate)
 
 dir_data <- "~/Data/Points"
 dir_emb <- "~/Data/embargoes/result"
+dir_data <- "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/Points"
+dir_emb <- "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/embargoes/result"
+
+
+
 
 point <- read_rds(file.path(dir_data, "points_row_sf.rds"))
 embargoes <- read_rds(file.path(dir_emb, "Car_embargoed_all_data.rds"))
@@ -17,6 +22,8 @@ names(embargoes)
 #DAT_DESEMBARGO
 embargoes_date <- embargoes %>% select(DAT_EMBARGO, DAT_DESEMBARGO) %>%  mutate(embargoStartY = year(dmy_hms(DAT_EMBARGO)) ,
          embargoEndY = year(dmy_hms(DAT_DESEMBARGO))) 
+#unique(embargoes_date$embargoStartY)
+#embargoes_date %>% filter (embargoStartY>2022) %>% as_tibble() %>% select(-geometry) %>% View() 
 
 
 point_emb <- point %>%  st_intersection(embargoes_date)
