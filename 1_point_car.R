@@ -5,10 +5,13 @@ library(sf)
 library(rnaturalearth)
 sf::sf_use_s2(FALSE) # issue with spehrical geometries of CAR data
 
-point_dir <- 
+
 car_data <- "~/shared_epl/public/ONGOING_RESEARCH/ZDCinBrazil/Deregulation_Covid/DATA/pa_br_car_2021"
 dir_car <- "~/Data/car"
 point_data <- "~/Data/Points"
+car_data <- "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/CAR/"
+dir_car <- "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/CAR/"
+point_data <- "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/Points"
 
 point_row <- read_rds(file.path(point_data, "points_row_sf.rds"))
 #MT
@@ -33,27 +36,27 @@ CAR_p <- rbind(RO_car_p %>% select(), MT_car_p %>% select(), PA_car_p %>% select
 # intersect
 
 #in 101 iterations / tiles
-point_row <- point_row %>% mutate (group= rep(1:101, each=nrow(point_row)/100, length.out=nrow(point_row) ))
+point_row <- point_row %>% mutate (group= rep(1:201, each=nrow(point_row)/200, length.out=nrow(point_row) ))
 
-for (i in 1:101){
+for (i in 1:201){
   timestamp()
   print(i)
   point_a <- point_row %>% filter (group ==i)
   point_a_bbox <- st_bbox(point_a)
+  CAR_p_box <- CAR_p %>% st_crop(point_a_bbox)
   if (i==1){
-    CAR_p_box <- CAR_p %>% st_crop(point_a_bbox)
     point_car <- point_a %>% st_intersects (CAR_p_box, sparse = FALSE)# true false intersection
     point_car.tb <- tibble(CAR_iru= point_car[,1]) 
   }else {
-    CAR_p_box <- CAR_p %>% st_crop(point_a_bbox)
-    if (nrow(  CAR_p_box )>0){
+    #if (nrow(  CAR_p_box )>0){
       tmp <- point_a %>% st_intersects (CAR_p_box, sparse = FALSE)# true false intersection
       tmp.tb <- tibble(CAR_iru= tmp[,1]) 
       point_car.tb <-  point_car.tb %>% bind_rows(tmp.tb)
-      }else {
-      tmp.tb <- tibble(CAR_iru= rep(FALSE, length(point_row %>% filter (group ==i) %>% pull())) )
-      point_car.tb <-  point_car.tb %>% bind_rows(tmp.tb)
-  }}
+      # }else {
+      # tmp.tb <- tibble(CAR_iru= rep(FALSE, length(point_row %>% filter (group ==i) %>% pull())) )
+      # point_car.tb <-  point_car.tb %>% bind_rows(tmp.tb)
+      # }
+  }
   timestamp()
   gc()
   }
