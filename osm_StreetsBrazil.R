@@ -171,5 +171,6 @@ OSM_roads_merge <- OSM_roads %>% st_union()
 write_rds(OSM_roads_merge, file.path(dir_data,"results/OSM_roads.rds"))
 write_rds(OSM_roads_merge, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/results/OSM_roads.rds") 
 
-  
+
+
 

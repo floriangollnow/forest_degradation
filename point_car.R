@@ -31,8 +31,23 @@ CAR_p <- rbind(RO_car_p %>% select(), MT_car_p %>% select(), PA_car_p %>% select
 
 #MT_point_row <-  point_row %>%  st_crop (MT_box)
 # intersect
-points_car <- point_row %>% sf::st_intersects (CAR_p, sparse = FALSE)# true false intersection
 
-point_car.tb <- tibble(CAR_iru= points_car[,1]) 
+#in 10 itterations again
+ind <- point_row %>% nrow()/100
+for (i in 1:100){
+  timestamp()
+  print(i)
+  point_a <- point_row %>% filter (row >= ind*(i-1) & row< ind*i)
+  if (i==1){
+  point_car <- point_a %>% st_intersects (CAR_p, sparse = FALSE)# true false intersection
+  point_car.tb <- tibble(CAR_iru= points_car[,1]) 
+  }else {
+    tmp <- point_a %>% st_intersects (CAR_p, sparse = FALSE)# true false intersection
+    tmp.tb <- tibble(CAR_iru= tmp[,1]) 
+    point_car.tb <-  point_car.tb %>% bind_rows(tmp.tb)
+  }
+  timestamp()
+  }
+  
 point_car_sf <- point_row %>% bind_cols(points_car.tb)
 write_rds (point_car_sf, file.path (dir_car , "point_car_sf.rds"))

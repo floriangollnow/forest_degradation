@@ -1,11 +1,8 @@
 # forest_degradation
 ## To do:
-Intersect sample points with:
-- distance to main roads  
-- distance to secondary roads  
-- public land  (CAR)
-- private land (CAR)
-- Incra Settlements (separately [Federal and Reconhecimento](https://certificacao.incra.gov.br/csv_shp/export_shp.py))
+ - combine datasets
+
+
 
 ## Done
 - Prepare points data for data extraction  
@@ -14,4 +11,9 @@ Intersect sample points with:
 - [Protected areas](https://www.gov.br/icmbio/pt-br/servicos/geoprocessamento/mapa-tematico-e-dados-geoestatisticos-das-unidades-de-conservacao-federais) YEAR/NA
 - [Indigenous lands](https://www.gov.br/funai/pt-br/atuacao/terras-indigenas/geoprocessamento-e-mapas)  TRUE/FALSE
 - Embargoed areas (intersection of [IBAMA](https://servicos.ibama.gov.br/ctf/publico/areasembargadas/ConsultaPublicaAreasEmbargadas.php) list and CAR) embargoStartY/embargoEndY
+- public land  (CAR)
+- private land (CAR)
+- distance to main [roads](https://wiki.openstreetmap.org/wiki/Key:highway)  (motorway, trunk, primary)
+- distance to secondary [roads](https://wiki.openstreetmap.org/wiki/Key:highway)  (secondary)
+- distance to any [road](https://wiki.openstreetmap.org/wiki/Key:highway)  (all categories)
 
