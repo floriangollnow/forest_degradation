@@ -32,22 +32,31 @@ CAR_p <- rbind(RO_car_p %>% select(), MT_car_p %>% select(), PA_car_p %>% select
 #MT_point_row <-  point_row %>%  st_crop (MT_box)
 # intersect
 
-#in 10 itterations again
-ind <- point_row %>% nrow()/100
-for (i in 1:100){
+#in 101 iterations / tiles
+point_row <- point_row %>% mutate (group= rep(1:101, each=nrow(point_row)/100, length.out=nrow(point_row) ))
+
+for (i in 1:101){
   timestamp()
   print(i)
-  point_a <- point_row %>% filter (row >= ind*(i-1) & row< ind*i)
+  point_a <- point_row %>% filter (group ==i)
+  point_a_bbox <- st_bbox(point_a)
   if (i==1){
-  point_car <- point_a %>% st_intersects (CAR_p, sparse = FALSE)# true false intersection
-  point_car.tb <- tibble(CAR_iru= points_car[,1]) 
+    CAR_p_box <- CAR_p %>% st_crop(point_a_bbox)
+    point_car <- point_a %>% st_intersects (CAR_p_box, sparse = FALSE)# true false intersection
+    point_car.tb <- tibble(CAR_iru= point_car[,1]) 
   }else {
-    tmp <- point_a %>% st_intersects (CAR_p, sparse = FALSE)# true false intersection
-    tmp.tb <- tibble(CAR_iru= tmp[,1]) 
-    point_car.tb <-  point_car.tb %>% bind_rows(tmp.tb)
-  }
+    CAR_p_box <- CAR_p %>% st_crop(point_a_bbox)
+    if (nrow(  CAR_p_box )>0){
+      tmp <- point_a %>% st_intersects (CAR_p_box, sparse = FALSE)# true false intersection
+      tmp.tb <- tibble(CAR_iru= tmp[,1]) 
+      point_car.tb <-  point_car.tb %>% bind_rows(tmp.tb)
+      }else {
+      tmp.tb <- tibble(CAR_iru= rep(FALSE, length(point_row %>% filter (group ==i) %>% pull())) )
+      point_car.tb <-  point_car.tb %>% bind_rows(tmp.tb)
+  }}
   timestamp()
+  gc()
   }
   
-point_car_sf <- point_row %>% bind_cols(points_car.tb)
+point_car_sf <- point_row %>% bind_cols(point_car.tb)
 write_rds (point_car_sf, file.path (dir_car , "point_car_sf.rds"))
