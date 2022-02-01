@@ -4,9 +4,9 @@ library(nngeo)
 
 
 dir_data <- "~/Data/Points"
-
+dir_data <- "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/Points"
 dir_terr <- "~/Data/protected and Indigena/"
-
+dir_terr <- "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/protected and Indigena"
 
 pa <- read_sf (file.path(dir_terr, "pa/UC_Fed_Atualizado_novembro_2020/UC_Fed_nov_2020.shp"))
 indMT <- read_sf (file.path(dir_terr, "/indigena/ti_sirgas(MT)/ti_sirgas.shp"))
@@ -45,6 +45,7 @@ head(point_ind)
 point_ind.tb <- tibble(Indigenous= point_ind[,1])
 point_ind_sf <- point %>% bind_cols(point_ind.tb)
 write_rds (point_ind_sf, file.path (dir_terr , "results/point_ind_sf.rds"))
+point_ind_sf <- read_rds (file.path (dir_terr , "results/point_ind_sf.rds"))
 
 ############
 # PAs
@@ -70,7 +71,7 @@ for (i in 1:10){
 }
 write_rds (point_pa_all, file.path (dir_terr , "results/point_pa_all_sf.rds"))
 unique( point_pa_all$anoCriacao)
-
+point_pa_all<- read_rds ( file.path (dir_terr , "results/point_pa_all_sf.rds"))
 
 ################
 # combine all points and pa and ind
@@ -83,7 +84,7 @@ point_2pa <- point %>% left_join(point_pa_all.tb, by="row")
 point_ind_sf.db <- point_ind_sf %>% as_tibble() %>% select(-geometry)
 point_2pa_ind <- point_2pa %>% left_join(point_ind_sf.db, by="row")
 
-write_rds (point_pa_all, file.path (dir_terr , "results/POINT_PA_IND_sf.rds"))
+write_rds (point_2pa_ind, file.path (dir_terr , "results/POINT_PA_IND_sf.rds"))
 
 
 
