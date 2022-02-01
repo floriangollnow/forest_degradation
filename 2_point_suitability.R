@@ -1,3 +1,5 @@
+## intersect points and suitability layers
+
 library (tidyverse)
 library (sf)
 library(terra)
@@ -15,7 +17,7 @@ apt <- rast (file.path(dir_apt,"apt.tif")) # be aware of the different projectio
 points <- read_rds (file.path (dir_points, "points_row_sf.rds")) 
 points <- points %>% mutate (ID=row+1)
 points_v <- points %>% vect() 
-points_v_2 <- points %>% st_transform (crs=crs(apt, proj=T)) %>% vect() # use same projectoion asn apt raster
+points_v_2 <- points %>% st_transform (crs=crs(apt, proj=T)) %>% vect() # use same projection as apt raster
 
 
 gaez <- rast (file.path(dir_gaez,"GAEZ_SoySuitability.tif") )
