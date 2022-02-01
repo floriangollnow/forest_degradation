@@ -44,7 +44,7 @@ point_ind <- point %>% st_intersects (ind_u, sparse = FALSE)
 head(point_ind)
 point_ind.tb <- tibble(Indigenous= point_ind[,1])
 point_ind_sf <- point %>% bind_cols(point_ind.tb)
-write_rds (point_ind_sf, file.path (dir_terr , "point_ind_sf.rds"))
+write_rds (point_ind_sf, file.path (dir_terr , "results/point_ind_sf.rds"))
 
 ############
 # PAs
@@ -57,7 +57,7 @@ for (i in 4:10){
   print(i)
     point_a <- point %>% filter (row >= ind*(i-1) & row< ind*i)
     point_pa <- point_a %>% st_intersection (pa_a)
-    write_rds (point_pa, file.path (dir_terr , paste0("point_pa",i,"_sf.rds")))
+    write_rds (point_pa, file.path (dir_terr , paste0("processing/","point_pa",i,"_sf.rds")))
     assign(paste0("point_",i), point_pa)
 }
 for (i in 1:10){
@@ -68,7 +68,7 @@ for (i in 1:10){
     point_pa_all <- rbind(point_pa_all, tmp)
   }
 }
-write_rds (point_pa_all, file.path (dir_terr , "point_pa_all_sf.rds"))
+write_rds (point_pa_all, file.path (dir_terr , "results/point_pa_all_sf.rds"))
 unique( point_pa_all$anoCriacao)
 
 
@@ -83,7 +83,7 @@ point_2pa <- point %>% left_join(point_pa_all.tb, by="row")
 point_ind_sf.db <- point_ind_sf %>% as_tibble() %>% select(-geometry)
 point_2pa_ind <- point_2pa %>% left_join(point_ind_sf.db, by="row")
 
-write_rds (point_pa_all, file.path (dir_terr , "POINT_PA_IND_sf.rds"))
+write_rds (point_pa_all, file.path (dir_terr , "results/POINT_PA_IND_sf.rds"))
 
 
 
