@@ -3,6 +3,7 @@ library (sf)
 #library(geojsonsf)
 
 dir_data <- "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/Points"
+dir_data<- "~/Data/Points"
 
 points <- read_csv(file.path(dir_data, "coded_ancillary_1km_grid_prodes_year_10-13-2021_full.csv"))
 points <- points %>% select(-c(`system:index`, `.geo`)) %>% rename(row=`...1`)
