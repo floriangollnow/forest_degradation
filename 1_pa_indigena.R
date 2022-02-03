@@ -11,7 +11,6 @@ dir_data <- "~/Data/Points"
 
 dir_terr <- "~/Data/protected and Indigena/"
 
-
 pa <- read_sf (file.path(dir_terr, "pa/UC_Fed_Atualizado_novembro_2020/UC_Fed_nov_2020.shp"))
 indMT <- read_sf (file.path(dir_terr, "/indigena/ti_sirgas(MT)/ti_sirgas.shp"))
 indPA <- read_sf (file.path(dir_terr, "/indigena/ti_sirgas(PA)/ti_sirgas.shp"))

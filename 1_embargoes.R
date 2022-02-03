@@ -84,7 +84,7 @@ ggplot(emb_2intersect_latlong_sf )+geom_sf(aes())
 
 
 ### 
-### intyersect points from IBAMA with CAR properties for MT, PA, RO
+### intersect points from IBAMA with CAR properties for MT, PA, RO
 
 # MT 
 MT_car <- read_sf (file.path(car_data, "uf_MT/uf_MT.shp"))
