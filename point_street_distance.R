@@ -11,19 +11,9 @@ dir_osm <- "~/Data/OSM_roads/results/"
 
 point_row <- read_rds(file.path(dir_data, "points_row_sf.rds"))
 roads <- read_rds(file.path (dir_osm, "PA_roads_all_tiles_u_s2FALSE.rds"))
-# roads_u <- roads %>% 
-#   group_by(highway) %>%
-#   summarise(geometry = sf::st_union(geometry)) %>%
-#   ungroup()
-# roads_u
-# write_rds (roads_u, "/Users/floriangollnow/Dropbox/ZDC_project/FEDE/OSM_roads/results/PA_roads_all_tiles_u2_s2off.rds")
 
 roads <- roads %>% filter (highway!="primary_link")# don't know why this is in there
 
-# points1_10 <- points %>% filter(row<=2) # just for testing
-
-#https://gis.stackexchange.com/questions/225102/calculate-distance-between-points-and-nearest-polygon-in-r
-# any_road type
 timestamp()
 
 point_row <- point_row %>% mutate (group= rep(1:1001, each=nrow(point_row)/1000, length.out=nrow(point_row) ))
@@ -44,7 +34,6 @@ for (i in 1:1001){
     point_to_road.tb  <-  point_to_road.tb  %>% bind_rows(tmp.tb)
   }
   timestamp()
-  gc()
 }
 
 
