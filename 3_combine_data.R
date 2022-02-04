@@ -67,7 +67,10 @@ point_data_c <- point_data %>% left_join(data_all, by="row")
 names(point_data_c)
 
 write_rds (point_data_c, file.path(dir_data, "Points/results/points_data_all_sf.rds"))
-write_csv (point_data_c %>% as_tibble() %>% select(-geometry), file.path(dir_data, "Points/results/points_data_all_sf.csv"))
-write_sf (point_data_c, file.path(dir_data, "Points/results/points_data_all_sf.shp"))
+write_csv (point_data_c %>% as_tibble() %>% select(-geometry), file.path(dir_data, "Points/results/points_data_all.csv"))
+write_csv (point_data_c %>% as_tibble() , file.path(dir_data, "Points/results/points_data_all_sf.csv"))
+#write_sf (point_data_c, file.path(dir_data, "Points/results/points_data_all_sf.shp"))
+#write_sf (point_data_c, file.path(dir_data, "Points/results/points_data_all_sf.geojson"))
+
 
 
