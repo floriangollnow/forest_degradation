@@ -75,8 +75,8 @@ for (i in 1:10){
     point_assR_all <- rbind(point_assR_all, tmp)
   }
 }
-point_assF_all <- point_assF_all %>% select(-data_de_cr)
-point_assR_all <- point_assR_all %>% select(-data_de_cr)
+point_assF_all <- point_assF_all %>% select(-c(data_de_cr, group))
+point_assR_all <- point_assR_all %>% select(-c(data_de_cr, group))
 
 
 point_row_result <- point_row %>% left_join(point_assF_all %>% as_tibble() %>% select(-geometry), by = 'row') %>% 

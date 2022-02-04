@@ -1,6 +1,7 @@
 library (tidyverse)
 library (sf)
 library(terra)
+library(whitebox)
 #library(raster)
 #extracting population density data for each point between 2000 and 2020 using terra package
 
@@ -20,13 +21,9 @@ i=1
 pop <- rast(file.path (dir_pop, files_pop[i] ))
 
 
-roadsP_r <- rast (pop) #%>% disagg(fact=10)
+roadsP_r <- rast (pop) 
 roadsP_r <- roadsP_r %>% crop(roadsP_v )
-roadsP_r  <- rasterize(roadsP_v, roadsP_r)
-roadsP_r_ag  <- aggregate(roadsP_r,fact=8, fun=max, na.rm=TRUE)
-roadsP_r_ag 
-plot(roadsP_r)
-plot(roadsP_r_ag)
+
 
 roadsP_r_dist<- distance (roadsP_r_ag)
 plot(roadsP_r_dist / 1000)

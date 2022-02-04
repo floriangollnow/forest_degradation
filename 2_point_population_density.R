@@ -17,15 +17,15 @@ files_pop <- dir (dir_pop, pattern = ".tif$")
 for (i in 1:length(files_pop)){
   print (i)
   print (length(files_pop))
-pop <- rast(file.path (dir_pop, files_pop[i] ))
-points_pop <- terra::extract( pop, points_v, fun=NULL, method='simple')
+  pop <- rast(file.path (dir_pop, files_pop[i] ))
+  points_pop <- terra::extract( pop, points_v, fun=NULL, method='simple')
 if (i==1){
   pop_data <- as_tibble(points_pop)
 }else {
   pop_data <- pop_data %>% left_join(as_tibble(points_pop ), by="ID")
 }
 }
-
+names(pop_data)
 #View(pop_data)
 # combine output with sf point file based on row numbers starting at 1 (ID column)
 points_data <- points %>% left_join(pop_data, by="ID")
