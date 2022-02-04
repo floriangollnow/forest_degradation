@@ -72,6 +72,8 @@ roadsP_r_dist_dis<- disagg (roadsP_r_dist_dis, fact=2,method='bilinear')
 roadsP_r_dist_dis
 plot(roadsP_r_dist_dis / 1000)
 writeRaster(roadsP_r_dist_dis,file.path (dir_roads, "PrimaryR_dist_raster.tif"))
+#roadsP_r_dist_dis <-rast(file.path (dir_roads, "PrimaryR_dist_raster.tif"))
+
 
 roadsS_r_dist_dis<- disagg (roadsS_r_dist, fact=2,method='bilinear')
 roadsS_r_dist_dis<- disagg (roadsS_r_dist_dis, fact=2,method='bilinear')
